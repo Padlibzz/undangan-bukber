@@ -31,7 +31,6 @@
       scroll-behavior: smooth;
     }
 
-    /* Custom Scrollbar */
     ::-webkit-scrollbar {
       width: 8px;
     }
@@ -255,7 +254,6 @@
       transform: translateY(0) scale(1);
     }
 
-    /* 3D Glass Card */
     .glass-card {
       background: var(--bg-card);
       backdrop-filter: blur(25px);
@@ -274,12 +272,10 @@
       transform-style: preserve-3d;
       transform: perspective(1000px);
       transition: transform 0.1s ease-out;
-      /* For JS Tilt */
     }
 
     .glass-card>* {
       transform: translateZ(30px);
-      /* Pop out effect for content */
     }
 
     .glass-card::after {
@@ -458,7 +454,6 @@
       transform: translateY(-2px);
     }
 
-    /* MEDIA QUERIES */
     @media (max-width: 768px) {
       .cover-title {
         font-size: 2.8rem;
@@ -676,7 +671,7 @@
       <p>Wassalamu'alaikum Wr. Wb.</p>
       <p style="margin-top: 15px; font-size: 1.8rem; color: var(--gold); font-family: 'Playfair Display', serif;"
         class="shimmer-text">Erwin Esa Septian</p>
-      <p style="font-size: 0.8rem; margin-top: 30px; opacity: 0.5;">© 2026 GETWAL. All Rights Reserved.</p>
+      <p style="font-size: 0.8rem; margin-top: 30px; opacity: 0.5;">© 2026 Erwin Esa. All Rights Reserved.</p>
     </footer>
 
   </main>
@@ -688,7 +683,6 @@
   </audio>
 
   <script>
-    // --- SCROLL PROGRESS BAR ---
     window.addEventListener('scroll', () => {
       let scrollDistance = -document.body.getBoundingClientRect().top;
       let progressPercentage = (scrollDistance / (document.body.getBoundingClientRect().height - document.documentElement.clientHeight)) * 100;
@@ -696,7 +690,6 @@
       document.getElementById('scroll-progress').style.width = val + "%";
     });
 
-    // --- CANGGIH: PARTIKEL BERJARING (CONSTELLATION) ---
     const canvas = document.getElementById("particle-canvas");
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
@@ -747,7 +740,6 @@
         particlesArray[i].update();
         particlesArray[i].draw();
 
-        // Menghubungkan garis antar partikel (Efek Jaringan)
         for (let j = i; j < particlesArray.length; j++) {
           let dx = particlesArray[i].x - particlesArray[j].x;
           let dy = particlesArray[i].y - particlesArray[j].y;
@@ -774,19 +766,17 @@
       initParticles();
     });
 
-    // --- 3D TILT EFFECT UNTUK KARTU KACA ---
     const tiltElements = document.querySelectorAll('.tilt-element');
     tiltElements.forEach(el => {
       el.addEventListener('mousemove', (e) => {
-        if (window.innerWidth <= 768) return; // Matikan di mobile agar tidak berat
+        if (window.innerWidth <= 768) return;
         let rect = el.getBoundingClientRect();
         let x = e.clientX - rect.left;
         let y = e.clientY - rect.top;
         let xMid = rect.width / 2;
         let yMid = rect.height / 2;
-        let xTilt = (y - yMid) / 15; // Kecepatan rotasi sumbu X
-        let yTilt = (xMid - x) / 15; // Kecepatan rotasi sumbu Y
-
+        let xTilt = (y - yMid) / 15;
+        let yTilt = (xMid - x) / 15;
         el.style.transform = `perspective(1000px) rotateX(${xTilt}deg) rotateY(${yTilt}deg) scale3d(1.02, 1.02, 1.02)`;
         el.style.transition = 'none';
       });
@@ -797,7 +787,6 @@
       });
     });
 
-    // --- LOGIKA URL TAMU ---
     const urlParams = new URLSearchParams(window.location.search);
     const tamu = urlParams.get('to');
     if (tamu) {
@@ -840,7 +829,6 @@
       }
     }
 
-    // --- ANIMASI MUNCUL SAAT SCROLL ---
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -854,7 +842,6 @@
       observer.observe(reveal);
     });
 
-    // --- COUNTDOWN ---
     const targetDate = new Date("Mar 18, 2026 17:30:00").getTime();
     const interval = setInterval(() => {
       const now = new Date().getTime();
@@ -873,14 +860,11 @@
       document.getElementById("detik").innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
     }, 1000);
 
-    // --- ADD TO CALENDAR ---
     function addToCalendar() {
-      // Format Waktu UTC untuk 18 Maret 2026, 17:30 WIB (UTC+7) -> 10:30 UTC
       const url = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Buka+Puasa+Bersama+GETWAL&dates=20260318T103000Z/20260318T130000Z&details=Buka+Puasa+Bersama+Generation+Twelve+Al-Hikam.+Mari+merajut+ukhuwah!&location=Jln.Prabu+Tadjimalela+(Sacipa)";
       window.open(url, '_blank');
     }
 
-    // --- WHATSAPP ---
     function kirimWA() {
       let namaTamu = document.getElementById("inputNama").value;
       if (namaTamu.trim() === "") {
