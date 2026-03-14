@@ -101,6 +101,7 @@
       backdrop-filter: blur(10px);
       box-shadow: 0 0 40px rgba(232, 195, 123, 0.05);
       position: relative;
+      margin: 0 20px;
     }
 
     .cover-title {
@@ -131,6 +132,8 @@
       box-shadow: 0 10px 25px rgba(232, 195, 123, 0.3);
       transition: all 0.4s ease;
       animation: gradientShift 4s ease infinite;
+      display: inline-block;
+      text-decoration: none;
     }
 
     @keyframes gradientShift {
@@ -210,9 +213,23 @@
       z-index: -1;
     }
 
+    .section-title {
+      font-size: 2rem;
+      margin-top: 10px;
+    }
+
+    .section-desc {
+      margin: 25px 0;
+      line-height: 1.8;
+      color: #a8b2d1;
+      font-size: 1.05rem;
+    }
+
     .countdown-wrapper {
       display: flex;
       justify-content: center;
+      flex-wrap: wrap;
+      /* Memungkinkan kotak turun ke bawah jika layar sempit */
       gap: 15px;
       margin: 35px 0;
     }
@@ -223,6 +240,9 @@
       border-radius: 15px;
       padding: 18px 15px;
       min-width: 85px;
+      flex: 1 1 auto;
+      max-width: 100px;
+      /* Menjaga ukuran tidak terlalu besar */
       box-shadow: inset 0 0 15px rgba(232, 195, 123, 0.05);
       position: relative;
       overflow: hidden;
@@ -326,6 +346,96 @@
       border-color: var(--gold);
       box-shadow: 0 0 20px rgba(232, 195, 123, 0.4);
     }
+
+    /* =========================================
+       MEDIA QUERIES (MOBILE OPTIMIZATION)
+       ========================================= */
+    @media (max-width: 768px) {
+      .cover-title {
+        font-size: 2.5rem;
+      }
+
+      .glass-card {
+        padding: 30px 20px;
+      }
+
+      section {
+        padding: 60px 15px;
+        min-height: auto;
+        /* Mengurangi ruang kosong berlebih di layar HP */
+      }
+
+      .countdown-wrapper {
+        gap: 10px;
+      }
+
+      .cd-box {
+        min-width: 70px;
+        padding: 12px 10px;
+      }
+
+      .cd-box span {
+        font-size: 1.8rem;
+      }
+
+      #music-control {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .cover-title {
+        font-size: 2rem;
+      }
+
+      .cover-content {
+        padding: 30px 15px;
+        border-radius: 150px 150px 10px 10px;
+      }
+
+      .lantern {
+        font-size: 2.5rem;
+      }
+
+      .btn-gold {
+        padding: 12px 25px;
+        font-size: 0.9rem;
+      }
+
+      .section-title {
+        font-size: 1.6rem;
+      }
+
+      .section-desc {
+        font-size: 0.95rem;
+      }
+
+      h3 {
+        font-size: 1.3rem !important;
+      }
+
+      .cd-box {
+        min-width: 60px;
+        padding: 10px 5px;
+      }
+
+      .cd-box span {
+        font-size: 1.5rem;
+      }
+
+      .cd-box small {
+        font-size: 0.65rem;
+      }
+
+      iframe {
+        height: 250px;
+        /* Map lebih proporsional di HP */
+      }
+    }
   </style>
 </head>
 
@@ -349,15 +459,15 @@
     <section id="hero">
       <div class="glass-card reveal">
         <div class="lantern" style="font-size: 4rem;">🕌</div>
-        <h2 style="font-size: 2rem; margin-top: 10px;" class="shimmer-text">Assalamu'alaikum Wr. Wb.</h2>
-        <p style="margin: 25px 0; line-height: 1.8; color: #a8b2d1; font-size: 1.05rem;">
+        <h2 class="section-title shimmer-text">Assalamu'alaikum Wr. Wb.</h2>
+        <p class="section-desc">
           Puji syukur senantiasa kita panjatkan. Dengan penuh kebahagiaan, kami mengundang Anda untuk merajut ukhuwah
           dalam acara Buka Puasa Bersama.
         </p>
 
         <hr class="elegant">
 
-        <h3 style="font-size: 1.6rem;">Rabu, 18 Maret 2026</h3>
+        <h3>Rabu, 18 Maret 2026</h3>
         <p style="color: var(--gold-light); margin-top: 5px; font-size: 1.1rem; font-weight: 500;">Pukul 17:30 WIB -
           Selesai</p>
 
@@ -375,7 +485,7 @@
 
     <section id="details">
       <div class="glass-card reveal">
-        <h2 style="font-size: 2rem;" class="shimmer-text">Rangkaian Acara</h2>
+        <h2 class="section-title shimmer-text">Rangkaian Acara</h2>
         <hr class="elegant">
 
         <div style="text-align: left; margin: 0 auto; max-width: 450px; line-height: 2.2; font-size: 1.05rem;">
@@ -394,8 +504,8 @@
 
     <section id="location">
       <div class="glass-card reveal">
-        <h2 style="font-size: 2rem;" class="shimmer-text">Lokasi Acara</h2>
-        <p style="margin-bottom: 25px; color: #a8b2d1; font-size: 1.1rem;">Jln.Prabu Tadjimalela (sacipa)</p>
+        <h2 class="section-title shimmer-text">Lokasi Acara</h2>
+        <p class="section-desc">Jln.Prabu Tadjimalela (sacipa)</p>
 
         <iframe width="100%" height="320"
           style="border:0; border-radius: 15px; box-shadow: 0 15px 30px rgba(0,0,0,0.6);" loading="lazy" allowfullscreen
@@ -411,8 +521,8 @@
 
     <section id="rsvp">
       <div class="glass-card reveal">
-        <h2 style="font-size: 2rem;" class="shimmer-text">Kehadiran</h2>
-        <p style="margin-bottom: 20px; font-size: 1.05rem; color: #a8b2d1;">Kehadiran Anda adalah kehormatan bagi kami.
+        <h2 class="section-title shimmer-text">Kehadiran</h2>
+        <p class="section-desc" style="margin-bottom: 20px;">Kehadiran Anda adalah kehormatan bagi kami.
           Mohon isi nama untuk konfirmasi.</p>
 
         <input type="text" id="inputNama" class="input-nama" placeholder="Ketik Nama Anda di Sini...">
@@ -440,6 +550,7 @@
   </audio>
 
   <script>
+    // [Script JS Anda tetap tidak berubah karena sudah berjalan baik]
     const canvas = document.getElementById("particle-canvas");
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
