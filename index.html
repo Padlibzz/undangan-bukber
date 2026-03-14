@@ -3,222 +3,609 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Undangan Bukber Ramadhan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Premium Iftar Invitation - GETWAL</title>
 
   <style>
-    body {
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap');
+  </style>
+
+  <style>
+    :root {
+      --gold: #e8c37b;
+      --gold-light: #fff3ce;
+      --gold-dark: #b89554;
+      --bg-dark: #071318;
+      --bg-card: rgba(10, 20, 26, 0.65);
+      --text-main: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
-      font-family: Arial;
-      background: #0f2027;
-      color: white;
-      text-align: center;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 300;
+      background-color: var(--bg-dark);
+      background-image: linear-gradient(rgba(7, 19, 24, 0.85), rgba(7, 19, 24, 0.95)), url('/home/padli/esafolder/image/01.jpeg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: var(--text-main);
       overflow-x: hidden;
     }
 
-    /* opening */
-
-    #opening {
+    /* Partikel Canvas Fix di Belakang */
+    #particle-canvas {
       position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100vh;
-      background: linear-gradient(#0f2027, #203a43);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: var(--gold);
+    }
+
+    /* --- EFEK TEKS MENGKILAP (SHIMMER) --- */
+    .shimmer-text {
+      background: linear-gradient(90deg, var(--gold) 0%, #fff 50%, var(--gold) 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 3s linear infinite;
+    }
+
+    @keyframes shimmer {
+      to {
+        background-position: 200% center;
+      }
+    }
+
+    /* --- OPENING COVER --- */
+    #cover {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: #071318;
+      background-image: radial-gradient(circle at center, #112d38 0%, #071318 100%);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      z-index: 9999;
+      transition: transform 1.5s cubic-bezier(0.86, 0, 0.07, 1), opacity 1.5s ease;
+      text-align: center;
+    }
+
+    .cover-content {
+      padding: 40px;
+      /* Dikembalikan ke bentuk kubah/pintu masjid seperti sebelumnya */
+      border: 1px solid rgba(232, 195, 123, 0.3);
+      border-radius: 200px 200px 10px 10px;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 40px rgba(232, 195, 123, 0.05);
+      position: relative;
+    }
+
+    .cover-title {
+      font-size: 3.2rem;
+      margin-bottom: 5px;
+      line-height: 1.1;
+    }
+
+    .cover-guest {
+      font-size: 1rem;
+      margin: 25px 0;
+      color: #fff;
+      letter-spacing: 2px;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold-dark), var(--gold-light), var(--gold-dark));
+      background-size: 200% 200%;
+      color: #071318;
+      border: none;
+      padding: 14px 40px;
+      border-radius: 50px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 2px;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(232, 195, 123, 0.3);
+      transition: all 0.4s ease;
+      animation: gradientShift 4s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 15px 35px rgba(232, 195, 123, 0.5);
+    }
+
+    /* --- LAYOUT UTAMA --- */
+    main {
+      display: none;
+      opacity: 0;
+      transition: opacity 1.5s ease;
+      position: relative;
       z-index: 10;
     }
 
-    #opening button {
-      padding: 15px 30px;
-      font-size: 18px;
-      border: none;
-      border-radius: 10px;
-      background: #ffd369;
-      cursor: pointer;
+    section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 80px 20px;
+      text-align: center;
     }
 
-    /* container */
-
-    .container {
-      max-width: 500px;
-      margin: auto;
-      padding: 20px;
+    /* Animasi Elemen Muncul */
+    .reveal {
+      opacity: 0;
+      transform: translateY(60px) scale(0.95);
+      transition: all 1.2s cubic-bezier(0.5, 0, 0, 1);
     }
 
-    /* masjid SVG */
-
-    .masjid {
-      width: 200px;
-      margin: auto;
-      animation: gerakMasjid 3s infinite alternate;
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
     }
 
-    @keyframes gerakMasjid {
-      from {
-        transform: translateY(0)
-      }
-
-      to {
-        transform: translateY(10px)
-      }
-    }
-
-    /* lampu */
-
-    .lamp {
-      font-size: 40px;
-      animation: goyang 2s infinite alternate;
-    }
-
-    @keyframes goyang {
-      from {
-        transform: rotate(-5deg)
-      }
-
-      to {
-        transform: rotate(5deg)
-      }
-    }
-
-    /* galeri */
-
-    .galeri img {
+    /* --- GLASSMORPHISM CARDS CANGGIH --- */
+    .glass-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(232, 195, 123, 0.4);
+      border-bottom: 1px solid rgba(232, 195, 123, 0.1);
+      border-radius: 25px;
+      padding: 50px;
       width: 100%;
-      border-radius: 10px;
-      margin-top: 10px;
+      max-width: 650px;
+      margin: 20px auto;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(232, 195, 123, 0.05);
+      position: relative;
+      overflow: hidden;
     }
 
-    /* star */
-
-    .star {
+    /* Pijaran Glow di dalam kartu */
+    .glass-card::before {
+      content: '';
       position: absolute;
-      width: 3px;
-      height: 3px;
-      background: white;
-      animation: jatuh linear infinite;
+      top: -50px;
+      left: -50px;
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, rgba(232, 195, 123, 0.2) 0%, transparent 70%);
+      border-radius: 50%;
+      z-index: -1;
     }
 
-    @keyframes jatuh {
-      from {
-        transform: translateY(-10px)
+    /* --- COUNTDOWN MEWAH --- */
+    .countdown-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 35px 0;
+    }
+
+    .cd-box {
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(232, 195, 123, 0.3);
+      border-radius: 15px;
+      padding: 18px 15px;
+      min-width: 85px;
+      box-shadow: inset 0 0 15px rgba(232, 195, 123, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cd-box span {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: var(--gold-light);
+      line-height: 1;
+      text-shadow: 0 0 10px rgba(232, 195, 123, 0.5);
+    }
+
+    .cd-box small {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 10px;
+      display: block;
+    }
+
+    /* --- FLOATING MUSIC CONTROLLER --- */
+    #music-control {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 55px;
+      height: 55px;
+      background: rgba(10, 20, 26, 0.8);
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      color: var(--gold);
+      cursor: pointer;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(232, 195, 123, 0.3);
+      animation: spin 4s linear infinite;
+      display: none;
+      /* Muncul setelah cover dibuka */
+    }
+
+    #music-control.paused {
+      animation-play-state: paused;
+      border-color: #8892b0;
+      color: #8892b0;
+      box-shadow: none;
+    }
+
+    @keyframes spin {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* --- ANIMASI LAMPION / ORNAMEN --- */
+    .lantern {
+      font-size: 3rem;
+      display: inline-block;
+      animation: swing 3s ease-in-out infinite alternate;
+      transform-origin: top center;
+    }
+
+    @keyframes swing {
+      0% {
+        transform: rotate(-10deg);
       }
 
-      to {
-        transform: translateY(100vh)
+      100% {
+        transform: rotate(10deg);
       }
+    }
+
+    hr.elegant {
+      border: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      margin: 35px 0;
+      opacity: 0.6;
+    }
+
+    /* INPUT WA */
+    .input-nama {
+      width: 100%;
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(232, 195, 123, 0.5);
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.1rem;
+      text-align: center;
+      margin-top: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .input-nama:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 20px rgba(232, 195, 123, 0.4);
     }
   </style>
 </head>
 
 <body>
 
-  <div id="opening">
+  <canvas id="particle-canvas"></canvas>
 
-    <h1>Undangan Bukber Ramadhan</h1>
-    <button onclick="buka()">Buka Undangan</button>
-
-  </div>
-
-  <div class="container" id="isi" style="display:none">
-
-    <div class="lamp">🏮</div>
-
-    <!-- masjid svg -->
-
-    <svg class="masjid" viewBox="0 0 64 64" fill="gold">
-      <path d="M32 2l10 10h-6v12h-8V12h-6z" />
-      <rect x="10" y="24" width="44" height="28" fill="gold" />
-    </svg>
-
-    <h2 id="nama"></h2>
-
-    <p>Assalamu'alaikum Wr. Wb.</p>
-
-    <p>Mari hadir di acara <b>Buka Puasa Bersama</b></p>
-
-    <p>
-      📅 Sabtu, 18 Maret 2026<br>
-      🕔 17:30 WIB<br>
-      📍 Aula / Rumah / Sekolah
-    </p>
-
-    <h3>Dress Code</h3>
-
-    <p>
-      🤍 Putih / Cream<br>
-      🕌 Busana Muslim / Muslimah
-    </p>
-
-    <h3>Rangkaian Acara</h3>
-
-    <p>
-      Buka Bersama<br>
-      Games<br>
-      Best Costume<br>
-      Door Prizes
-    </p>
-
-    <h3>Galeri</h3>
-
-    <div class="galeri">
-
-      <img src="https://images.unsplash.com/photo-1584556812952-905ffd0f47d2">
-      <img src="https://images.unsplash.com/photo-1587614382346-ac0c5c52a6d1">
-
+  <div id="cover">
+    <div class="cover-content">
+      <div class="lantern">✨🌙✨</div>
+      <h1 class="cover-title shimmer-text">Buka Puasa<br>Bersama</h1>
+      <p class="cover-guest" id="guest-name">GETWAL<br>
+        <span style="color: var(--gold); font-weight: 500;">Generation Twelve Al-Hikam</span>
+      </p>
+      <button class="btn-gold" onclick="openInvitation()">BUKA UNDANGAN</button>
     </div>
-
-    <h3>Lokasi</h3>
-
-    <iframe width="100%" height="250" style="border:0" loading="lazy" allowfullscreen
-      src="https://maps.google.com/maps?q=Serang&t=&z=13&ie=UTF8&iwloc=&output=embed">
-    </iframe>
-
   </div>
 
-  <audio id="musik" loop>
-    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_8c0dfe6f25.mp3">
+  <main id="main-content">
+
+    <section id="hero">
+      <div class="glass-card reveal">
+        <div class="lantern" style="font-size: 4rem;">🕌</div>
+        <h2 style="font-size: 2rem; margin-top: 10px;" class="shimmer-text">Assalamu'alaikum Wr. Wb.</h2>
+        <p style="margin: 25px 0; line-height: 1.8; color: #a8b2d1; font-size: 1.05rem;">
+          Puji syukur senantiasa kita panjatkan. Dengan penuh kebahagiaan, kami mengundang Anda untuk merajut ukhuwah
+          dalam acara Buka Puasa Bersama.
+        </p>
+
+        <hr class="elegant">
+
+        <h3 style="font-size: 1.6rem;">Rabu, 18 Maret 2026</h3>
+        <p style="color: var(--gold-light); margin-top: 5px; font-size: 1.1rem; font-weight: 500;">Pukul 17:30 WIB -
+          Selesai</p>
+
+        <div class="countdown-wrapper" id="countdown">
+          <div class="cd-box"><span id="hari">00</span><small>Hari</small></div>
+          <div class="cd-box"><span id="jam">00</span><small>Jam</small></div>
+          <div class="cd-box"><span id="menit">00</span><small>Menit</small></div>
+          <div class="cd-box"><span id="detik">00</span><small>Detik</small></div>
+        </div>
+        <p id="pesan-waktu"
+          style="display:none; color: var(--gold); font-size: 1.3rem; font-family: 'Playfair Display', serif;">Waktu
+          Buka Puasa Telah Tiba!</p>
+      </div>
+    </section>
+
+    <section id="details">
+      <div class="glass-card reveal">
+        <h2 style="font-size: 2rem;" class="shimmer-text">Rangkaian Acara</h2>
+        <hr class="elegant">
+
+        <div style="text-align: left; margin: 0 auto; max-width: 450px; line-height: 2.2; font-size: 1.05rem;">
+          <p>👔 <span style="color: var(--gold); font-weight: 500;">DRESS CODE:</span> Arabian Style / Moslem Elegant
+          </p>
+          <p>🎯 <span style="color: var(--gold); font-weight: 500;">AGENDA:</span></p>
+          <ul style="list-style-type: none; padding-left: 30px;">
+            <li>✨ Pembukaan & Doa Bersama</li>
+            <li>✨ Buka Puasa Bersama</li>
+            <li>✨ Sholat Maghrib Berjamaah</li>
+            <li>✨ Games & Ramah Tamah</li>
+            <li>✨ Pemilihan Best Costume & Doorprize</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="location">
+      <div class="glass-card reveal">
+        <h2 style="font-size: 2rem;" class="shimmer-text">Lokasi Acara</h2>
+        <p style="margin-bottom: 25px; color: #a8b2d1; font-size: 1.1rem;">Aula / Rumah / Sekolah</p>
+
+        <iframe width="100%" height="320"
+          style="border:0; border-radius: 15px; box-shadow: 0 15px 30px rgba(0,0,0,0.6);" loading="lazy" allowfullscreen
+          src="https://maps.google.com/maps?q=Sapphire+City+Park+Sumedang&t=&z=16&ie=UTF8&iwloc=&output=embed">
+        </iframe>
+
+        <a href="https://maps.google.com/?cid=15102397927715223243&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+          target="_blank" class="btn-gold" style="margin-top: 30px; padding: 14px 35px; width: 100%;">
+          📍 Buka Navigasi Maps
+        </a>
+      </div>
+    </section>
+
+    <section id="rsvp">
+      <div class="glass-card reveal">
+        <h2 style="font-size: 2rem;" class="shimmer-text">Kehadiran</h2>
+        <p style="margin-bottom: 20px; font-size: 1.05rem; color: #a8b2d1;">Kehadiran Anda adalah kehormatan bagi kami.
+          Mohon isi nama untuk konfirmasi.</p>
+
+        <input type="text" id="inputNama" class="input-nama" placeholder="Ketik Nama Anda di Sini...">
+
+        <button class="btn-gold"
+          style="background: linear-gradient(45deg, #25D366, #128C7E); color: white; width: 100%; margin-top: 20px;"
+          onclick="kirimWA()">
+          <span style="font-size: 1.3rem; vertical-align: middle; margin-right: 8px;">💬</span> RSVP WHATSAPP
+        </button>
+      </div>
+    </section>
+
+    <footer style="padding: 50px 20px; text-align: center; font-size: 1rem; color: #8892b0;">
+      <p>Wassalamu'alaikum Wr. Wb.</p>
+      <p style="margin-top: 15px; font-size: 1.5rem; color: var(--gold); font-family: 'Playfair Display', serif;"
+        class="shimmer-text">Erwin Esa Septian 😎</p>
+    </footer>
+
+  </main>
+
+  <div id="music-control" onclick="toggleMusic()">🎵</div>
+
+  <audio id="bg-music" loop>
+    <source src="/home/padli/esafolder/sound/01.mp3" type="audio/mpeg">
   </audio>
 
   <script>
+    /* --- SCRIPT PARTIKEL CANVAS CANGGIH --- */
+    const canvas = document.getElementById("particle-canvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-    /* buka undangan */
-
-    function buka() {
-
-      document.getElementById("opening").style.display = "none"
-      document.getElementById("isi").style.display = "block"
-
-      document.getElementById("musik").play()
-
+    let particlesArray = [];
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2.5 + 0.5;
+        this.speedX = Math.random() * 1 - 0.5;
+        this.speedY = Math.random() * 1 - 0.5;
+        this.opacity = Math.random() * 0.5 + 0.2;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
+        if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
+      }
+      draw() {
+        ctx.fillStyle = `rgba(232, 195, 123, ${this.opacity})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
     }
 
-    /* nama tamu */
+    function initParticles() {
+      particlesArray = [];
+      let numParticles = window.innerWidth < 768 ? 40 : 100; // Lebih sedikit partikel di HP agar lancar
+      for (let i = 0; i < numParticles; i++) {
+        particlesArray.push(new Particle());
+      }
+    }
 
-    const params = new URLSearchParams(window.location.search)
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < particlesArray.length; i++) {
+        particlesArray[i].update();
+        particlesArray[i].draw();
+      }
+      requestAnimationFrame(animateParticles);
+    }
+    initParticles();
+    animateParticles();
 
-    let tamu = params.get("to")
+    // Resize event agar partikel tidak pecah saat layar diputar
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initParticles();
+    });
 
+
+    /* --- SCRIPT LOGIKA UNDANGAN --- */
+    const urlParams = new URLSearchParams(window.location.search);
+    const tamu = urlParams.get('to');
     if (tamu) {
-      document.getElementById("nama").innerHTML = "Kepada: " + tamu
+      document.getElementById('guest-name').innerHTML = `KEPADA YTH.<br><span style="color: var(--gold); font-size: 1.6rem; font-family: 'Playfair Display', serif;">${tamu}</span>`;
+      document.getElementById('inputNama').value = tamu;
     }
 
-    /* bintang jatuh */
+    // Fungsi Buka Undangan (Animasi Bergeser Lebih Halus)
+    function openInvitation() {
+      const cover = document.getElementById('cover');
+      const mainContent = document.getElementById('main-content');
+      const audio = document.getElementById('bg-music');
+      const musicBtn = document.getElementById('music-control');
 
-    for (let i = 0; i < 40; i++) {
+      cover.style.transform = 'translateY(-100vh) scale(0.9)';
 
-      let star = document.createElement("div")
+      setTimeout(() => {
+        cover.style.display = 'none';
+        mainContent.style.display = 'block';
+        musicBtn.style.display = 'flex';
 
-      star.className = "star"
+        // Memaksa browser render display block sebelum transisi opacity
+        requestAnimationFrame(() => {
+          mainContent.style.opacity = '1';
+        });
 
-      star.style.left = Math.random() * 100 + "vw"
-
-      star.style.animationDuration = (2 + Math.random() * 3) + "s"
-
-      document.body.appendChild(star)
-
+        audio.play().catch(() => {
+          musicBtn.classList.add('paused');
+          console.log("Autoplay dicegah.");
+        });
+      }, 1200);
     }
 
+    // Toggle Play/Pause Musik
+    function toggleMusic() {
+      const audio = document.getElementById('bg-music');
+      const btn = document.getElementById('music-control');
+      if (audio.paused) {
+        audio.play();
+        btn.classList.remove('paused');
+      } else {
+        audio.pause();
+        btn.classList.add('paused');
+      }
+    }
+
+    // Animasi Scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, {threshold: 0.15});
+
+    reveals.forEach(reveal => {
+      observer.observe(reveal);
+    });
+
+    // Countdown Timer
+    const targetDate = new Date("Mar 18, 2026 17:30:00").getTime();
+    const interval = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance < 0) {
+        clearInterval(interval);
+        document.getElementById("countdown").style.display = "none";
+        document.getElementById("pesan-waktu").style.display = "block";
+        return;
+      }
+
+      document.getElementById("hari").innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+      document.getElementById("jam").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+      document.getElementById("menit").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+      document.getElementById("detik").innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
+    }, 1000);
+
+    // Kirim WA
+    function kirimWA() {
+      let namaTamu = document.getElementById("inputNama").value;
+
+      if (namaTamu.trim() === "") {
+        alert("Mohon isi nama Anda terlebih dahulu sebelum mengonfirmasi kehadiran.");
+        return;
+      }
+
+      let pesan = `Assalamu'alaikum, saya *${namaTamu}* mengkonfirmasi akan HADIR di acara Buka Puasa Bersama GETWAL.`;
+
+      // GANTI NOMOR INI
+      let nomor = "6288210222618";
+      window.open("https://wa.me/" + nomor + "?text=" + encodeURIComponent(pesan));
+    }
   </script>
 
 </body>
