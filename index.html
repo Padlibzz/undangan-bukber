@@ -42,7 +42,6 @@
       overflow-x: hidden;
     }
 
-    /* Partikel Canvas Fix di Belakang */
     #particle-canvas {
       position: fixed;
       top: 0;
@@ -63,7 +62,6 @@
       color: var(--gold);
     }
 
-    /* --- EFEK TEKS MENGKILAP (SHIMMER) --- */
     .shimmer-text {
       background: linear-gradient(90deg, var(--gold) 0%, #fff 50%, var(--gold) 100%);
       background-size: 200% auto;
@@ -78,7 +76,6 @@
       }
     }
 
-    /* --- OPENING COVER --- */
     #cover {
       position: fixed;
       top: 0;
@@ -156,7 +153,6 @@
       box-shadow: 0 15px 35px rgba(232, 195, 123, 0.5);
     }
 
-    /* --- LAYOUT UTAMA --- */
     main {
       display: none;
       opacity: 0;
@@ -175,7 +171,6 @@
       text-align: center;
     }
 
-    /* Animasi Elemen Muncul */
     .reveal {
       opacity: 0;
       transform: translateY(60px) scale(0.95);
@@ -187,7 +182,6 @@
       transform: translateY(0) scale(1);
     }
 
-    /* --- GLASSMORPHISM CARDS CANGGIH --- */
     .glass-card {
       background: var(--bg-card);
       backdrop-filter: blur(20px);
@@ -205,7 +199,6 @@
       overflow: hidden;
     }
 
-    /* Pijaran Glow di dalam kartu */
     .glass-card::before {
       content: '';
       position: absolute;
@@ -218,7 +211,6 @@
       z-index: -1;
     }
 
-    /* --- COUNTDOWN MEWAH --- */
     .countdown-wrapper {
       display: flex;
       justify-content: center;
@@ -256,7 +248,6 @@
       display: block;
     }
 
-    /* --- FLOATING MUSIC CONTROLLER --- */
     #music-control {
       position: fixed;
       bottom: 30px;
@@ -293,7 +284,6 @@
       }
     }
 
-    /* --- ANIMASI LAMPION / ORNAMEN --- */
     .lantern {
       font-size: 3rem;
       display: inline-block;
@@ -319,7 +309,6 @@
       opacity: 0.6;
     }
 
-    /* INPUT WA */
     .input-nama {
       width: 100%;
       padding: 16px;
@@ -453,7 +442,6 @@
   </audio>
 
   <script>
-    /* --- SCRIPT PARTIKEL CANVAS CANGGIH --- */
     const canvas = document.getElementById("particle-canvas");
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
@@ -485,8 +473,7 @@
 
     function initParticles() {
       particlesArray = [];
-      let numParticles = window.innerWidth < 768 ? 40 : 100; // Lebih sedikit partikel di HP agar lancar
-      for (let i = 0; i < numParticles; i++) {
+      let numParticles = window.innerWidth < 768 ? 40 : 100; for (let i = 0; i < numParticles; i++) {
         particlesArray.push(new Particle());
       }
     }
@@ -502,7 +489,6 @@
     initParticles();
     animateParticles();
 
-    // Resize event agar partikel tidak pecah saat layar diputar
     window.addEventListener('resize', () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -510,7 +496,6 @@
     });
 
 
-    /* --- SCRIPT LOGIKA UNDANGAN --- */
     const urlParams = new URLSearchParams(window.location.search);
     const tamu = urlParams.get('to');
     if (tamu) {
@@ -518,7 +503,6 @@
       document.getElementById('inputNama').value = tamu;
     }
 
-    // Fungsi Buka Undangan (Animasi Bergeser Lebih Halus)
     function openInvitation() {
       const cover = document.getElementById('cover');
       const mainContent = document.getElementById('main-content');
@@ -532,7 +516,6 @@
         mainContent.style.display = 'block';
         musicBtn.style.display = 'flex';
 
-        // Memaksa browser render display block sebelum transisi opacity
         requestAnimationFrame(() => {
           mainContent.style.opacity = '1';
         });
@@ -544,7 +527,6 @@
       }, 1200);
     }
 
-    // Toggle Play/Pause Musik
     function toggleMusic() {
       const audio = document.getElementById('bg-music');
       const btn = document.getElementById('music-control');
@@ -557,7 +539,6 @@
       }
     }
 
-    // Animasi Scroll
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -571,7 +552,6 @@
       observer.observe(reveal);
     });
 
-    // Countdown Timer
     const targetDate = new Date("Mar 18, 2026 17:30:00").getTime();
     const interval = setInterval(() => {
       const now = new Date().getTime();
@@ -590,7 +570,6 @@
       document.getElementById("detik").innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
     }, 1000);
 
-    // Kirim WA
     function kirimWA() {
       let namaTamu = document.getElementById("inputNama").value;
 
@@ -601,7 +580,6 @@
 
       let pesan = `Assalamu'alaikum, saya *${namaTamu}* mengkonfirmasi akan HADIR di acara Buka Puasa Bersama GETWAL.`;
 
-      // GANTI NOMOR INI
       let nomor = "6288210222618";
       window.open("https://wa.me/" + nomor + "?text=" + encodeURIComponent(pesan));
     }
